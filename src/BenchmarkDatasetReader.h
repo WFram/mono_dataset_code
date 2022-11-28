@@ -35,7 +35,8 @@
 #include <algorithm>
 
 #include "opencv2/opencv.hpp"
-#include "FOVUndistorter.h"
+//#include "FOVUndistorter.h"
+#include "Undistorter.h"
 #include "PhotometricUndistorter.h"
 
 #include "zip.h"
@@ -132,7 +133,8 @@ public:
 
 
 		// create undistorter.
-		undistorter = new UndistorterFOV((path+"camera.txt").c_str());
+		//undistorter = new UndistorterFOV((path+"camera.txt").c_str());
+		undistorter = Undistort::getUndistorterForFile((path+"camera.txt").c_str());
 		photoUndistorter = new PhotometricUndistorter(path+"pcalib.txt", path+"vignette.png",undistorter->getInputDims()[0],undistorter->getInputDims()[1]);
 
 
@@ -156,7 +158,12 @@ public:
 
 	}
 
-	UndistorterFOV* getUndistorter()
+	/*UndistorterFOV* getUndistorter()
+	{
+		return undistorter;
+	}*/
+	
+	Undistort* getUndistorter()
 	{
 		return undistorter;
 	}
@@ -249,7 +256,7 @@ public:
 		if(!isZipped)
 		{
 			// CHANGE FOR ZIP FILE
-			return cv::imread(files[id],CV_LOAD_IMAGE_GRAYSCALE);
+			return cv::imread(files[id],cv::IMREAD_GRAYSCALE);
 		}
 		else
 		{
@@ -271,7 +278,7 @@ public:
 					exit(1);
 				}
 			}
-			return cv::imdecode(cv::Mat(readbytes,1,CV_8U, databuffer), CV_LOAD_IMAGE_GRAYSCALE);
+			return cv::imdecode(cv::Mat(readbytes,1,CV_8U, databuffer), cv::IMREAD_GRAYSCALE);
 		}
 	}
 
@@ -336,7 +343,8 @@ private:
 
 
 	// internal structures.
-	UndistorterFOV* undistorter;
+	//UndistorterFOV* undistorter;
+	Undistort* undistorter;
 	PhotometricUndistorter* photoUndistorter;
 	zip_t* ziparchive;
 	char* databuffer;

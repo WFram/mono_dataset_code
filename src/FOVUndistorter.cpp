@@ -55,7 +55,7 @@ UndistorterFOV::UndistorterFOV(const char* configFileName)
 	std::ifstream infile(configFileName);
 	if(!infile.good())
 	{
-		printf("Failed to read camera calibration (invalid format?)\nCalibration file: %s\n", configFileName);
+		printf("Failed to read camera calibration [1] (invalid format?)\nCalibration file: %s\n", configFileName);
 		return;
 	}
 
@@ -77,7 +77,7 @@ UndistorterFOV::UndistorterFOV(const char* configFileName)
 	}
 	else
 	{
-		printf("Failed to read camera calibration (invalid format?)\nCalibration file: %s\n", configFileName);
+		printf("Failed to read camera calibration [2] (invalid format?)\nCalibration file: %s\n", configFileName);
 		return;
 	}
 
